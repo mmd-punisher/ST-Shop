@@ -2,15 +2,6 @@ class Shop:
     def __init__(self, prd_file=open('products.txt', 'r+')):
         self.product_file = prd_file
 
-    # def read_products(self):
-    #     products_info = str(self.product_file.readlines()[0])  # str of all products
-    #     product_info = products_info.split('*')
-    #     prd_list = []
-    #     for sht in range(len(product_info)):  # split all products info
-    #         prd = product_info[sht].split('-')
-    #         prd_list.append(prd)
-    #     return prd_list
-
     def update_counts(self, prd_index, new_count):  # nothing to return
         products = open('products.txt', 'r+')
         products_info = products.readlines()[0]
@@ -103,7 +94,7 @@ class Shop:
             customer_name = str(input('Enter your name please: '))
             customer_email = str(input('Enter your email: '))
             customer_address = str(input('Enter your address: '))
-            pass_key = input('If you wanna continue and buy, plz press Enter (type "cancel" to cancel your shopping)')
+            pass_key = input('For continue shopping, press \033[1;36;36mEnter\033[0;0m(type \033[1;31;31m"cancel"\033[0;0m to cancel your shopping)')
             if pass_key == '':
                 update_count = int(list_count_[id_sell_index]) - int(count_input)
                 self.update_counts(id_sell_index, update_count)
@@ -115,7 +106,7 @@ class Shop:
                                      'customer name': customer_name,
                                      'customer email': customer_email,
                                      'customer address': customer_address})
-                print('Tnx for your shopping')
+                print('\033[1;30;42mTnx for your shopping\033[0;0m')
             elif pass_key == 'cancel':
                 exit()
             else:
@@ -130,30 +121,40 @@ class Shop:
                 write_factor += (' : ' + sell_values[e])
                 write_factor += '\n'
             open('factor.txt', 'w').write(write_factor)
-            print('You can get your shopping list in current folder named "factor.txt"')
+            print('You can get your shopping list in current folder named \033[4;33;33m"factor.txt"\033[0;0m')
         return sell_product
 
 
-the_obj = Shop()
+while True:
+    print('\033[1;31;43m---- The Menu ----\033[0;0m')
+    print('')
+    the_obj = Shop()
+    # Inventory Part
+    inventory_obj = the_obj.inventory()
+    list_id = inventory_obj[0]
+    list_name = inventory_obj[1]
+    list_count = inventory_obj[2]
+    list_price = inventory_obj[3]
+    print('\033[3;30;44m---- INVENTORIES ----\033[0;0m')
+    for i in range(len(list_id)):
+        print('Name: ' + list_name[i])
+        print('Price: ' + list_price[i] + ' $')
+        message = ''
+        if list_count[i] == '0':
+            message = '\033[3;31;31m All Sold...\033[0;0m'
+        print('Count: ' + list_count[i] + message)
+        print()
 
-# Inventory Part
-inventory_obj = the_obj.inventory()
-list_id = inventory_obj[0]
-list_name = inventory_obj[1]
-list_count = inventory_obj[2]
-list_price = inventory_obj[3]
-print('---- INVENTORIES ----')
-for i in range(len(list_id)):
-    print('Name: ' + list_name[i])
-    print('Price: ' + list_price[i] + ' $')
-    message = ''
-    if list_count[i] == '0':
-        message = ' All Sold...'
-    print('Count: ' + list_count[i] + message)
-    print()
+    # Sell Part
+    print('\033[3;30;42m---- SELLING ----\033[0;0m')
+    id_sell_input = str(input("Enter the \033[1;36;36mid\033[0;0m of product you want to buy: "))
+    count_sell_input = str(input("Enter the \033[1;36;36mcount\033[0;0m of product you want to buy: "))
+    sell_obj = the_obj.sell(id_sell_input, count_sell_input)
 
-# Sell Part
-print('---- SELLING ----')
-id_sell_input = str(input("Enter the id of product you want to buy: "))
-count_sell_input = str(input("Enter the count of product you want to buy: "))
-sell_obj = the_obj.sell(id_sell_input, count_sell_input)
+
+    quit_key = input('\033[3;30;45m Enter "q" to QUIT or leave blank to continue:\033[0;0m')
+    if quit_key == 'q':
+        break
+    else:
+        pass
+
