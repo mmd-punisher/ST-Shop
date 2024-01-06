@@ -33,7 +33,6 @@ class Shop:
         open('products.txt', 'w').close()
         open('products.txt', 'w').write(write_str)
 
-
     def inventory(self):
         products = open('products.txt', 'r+')
         products_info = products.readlines()[0]  # str of all products
@@ -77,16 +76,13 @@ class Shop:
             list_name_.append(prd_list[j][1])
             list_count_.append(prd_list[j][2])
             list_price_.append(prd_list[j][4])
-        # list_id_ = _obj[0]
-        # list_name_ = _obj[1]
-        # list_count_ = _obj[2]
-        # list_price_ = _obj[3]
         id_sell_index = ''
         sell_product = {
             'product id': '',
             'product name': '',
             'product price': '',
             'product quantity': '',
+            'total price': '',
             'customer name': '',
             'customer email': '',
             'customer address': '',
@@ -98,37 +94,47 @@ class Shop:
             print('The id of product does not exist.')
             exit()
 
-        if int(count_input) > int(list_count_[id_sell_index]) :
-            print(f'The inventory of the "{list_name_[id_sell_index]}" is {list_count_[id_sell_index]}, you want more...')
+        if int(count_input) > int(list_count_[id_sell_index]) or int(count_input) == 0:
+            print(
+                f'The inventory of the "{list_name_[id_sell_index]}" is {list_count_[id_sell_index]}, you want something else...')
         else:
-            print(f'Total price {count_input} of "{list_name_[id_sell_index]}" is {int(list_price_[id_sell_index]) * int(count_input)} dollars')
+            print(
+                f'Total price {count_input} of "{list_name_[id_sell_index]}" is {int(list_price_[id_sell_index]) * int(count_input)} dollars')
             customer_name = str(input('Enter your name please: '))
             customer_email = str(input('Enter your email: '))
             customer_address = str(input('Enter your address: '))
-            pass_key = input('If you wanna continue and buy, pls press Enter (type "cancel" to cancel your shopping)')
+            pass_key = input('If you wanna continue and buy, plz press Enter (type "cancel" to cancel your shopping)')
             if pass_key == '':
-                success_message = 'Tnx for your shopping'  # item id_sell_index with count_sell_input is sold
                 update_count = int(list_count_[id_sell_index]) - int(count_input)
                 self.update_counts(id_sell_index, update_count)
-
-                sell_product['product id'] = str(list_id_[id_sell_index])
-                sell_product['product name'] = str(list_name_[id_sell_index])
-                sell_product['product quantity'] = str(list_count_[id_sell_index])
-                sell_product['product price'] = str(list_price_[id_sell_index])
-                sell_product['customer name'] = customer_name
-                sell_product['customer email'] = customer_email
-                sell_product['customer address'] = customer_address
-
-
-                print(success_message)
+                sell_product.update({'product id': str(list_id_[id_sell_index]),
+                                     'product name': str(list_name_[id_sell_index]),
+                                     'product price': str(list_price_[id_sell_index]),
+                                     'product quantity': str(count_input),
+                                     'total price': str(int(list_price_[id_sell_index]) * int(count_input)),
+                                     'customer name': customer_name,
+                                     'customer email': customer_email,
+                                     'customer address': customer_address})
+                print('Tnx for your shopping')
             elif pass_key == 'cancel':
                 exit()
+            else:
+                print('INVALID INPUT')
+                exit()
+            open('factor.txt', 'w').close()
+            sell_keys = list(sell_product.keys())
+            sell_values = list(sell_product.values())
+            write_factor = 'This is your shopping factor\n\n'
+            for e in range(len(sell_keys)):
+                write_factor += sell_keys[e]
+                write_factor += (' : ' + sell_values[e])
+                write_factor += '\n'
+            open('factor.txt', 'w').write(write_factor)
+            print('You can get your shopping list in current folder named "factor.txt"')
         return sell_product
 
 
-
 the_obj = Shop()
-
 
 # Inventory Part
 inventory_obj = the_obj.inventory()
@@ -151,5 +157,3 @@ print('---- SELLING ----')
 id_sell_input = str(input("Enter the id of product you want to buy: "))
 count_sell_input = str(input("Enter the count of product you want to buy: "))
 sell_obj = the_obj.sell(id_sell_input, count_sell_input)
-print(sell_obj.values())
-# print(the_obj.read_products())

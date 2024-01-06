@@ -1,0 +1,10 @@
+This is your shopping factor
+
+product id : 1
+product name : S21 FE
+product price : 250
+product quantity : 2
+total price : 500
+customer name : mmd
+customer email : adf
+customer address : sfag
