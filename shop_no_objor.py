@@ -12,17 +12,15 @@ def inventory():
     inventory_prd_list = []
     inventory_count_list = []
     for i in range(len(prd_list)):  # generate inventory lists (name and count)
-        inv_prd = prd_list[i][0]
-        inventory_prd_list.append(inv_prd)
-        inv_count = prd_list[i][1]
-        inventory_count_list.append(inv_count)
+        inventory_prd_list.append(prd_list[i][0])
+        inventory_count_list.append(prd_list[i][1])
 
     inventory_list = []
     for i in range(len(inventory_prd_list)):  # inventory list [prd, count]
         inventory_list.append(inventory_prd_list[i])
         inventory_list.append(inventory_count_list[i])
 
-    print(inventory_list)
+    print(inventory_prd_list)
 
 
 inventory()
