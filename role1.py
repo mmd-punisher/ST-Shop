@@ -166,3 +166,31 @@ sales_system.add_purchase_transaction(product2, 5, 600, "2023-12-18", "Supplier 
 # تولید گزارش ماهانه
 monthly_report = sales_system.generate_monthly_report()
 print(monthly_report)
+
+import os
+
+class Shop:
+    # ...
+
+    def sell(self, id_input, count_input):
+        # ...
+
+        factor_file = 'factor.txt'
+        with open(factor_file, 'w') as file:
+            file.write("This is your shopping factor\n\n")
+            for key, value in sell_product.items():
+                file.write(f"{key}: {value}\n")
+
+        print("Thank you for your shopping!")
+        print("You can find your shopping list here:")
+        with open(factor_file, 'r') as file:
+            factor_content = file.read()
+            print(factor_content)
+
+        # Open the factor.txt file using the default system text editor
+        if os.name == 'nt':  # Windows
+            os.startfile(factor_file)
+        else:  # macOS and Linux
+            os.system(f"open {factor_file}")
+
+        return sell_product

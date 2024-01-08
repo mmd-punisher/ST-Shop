@@ -124,37 +124,42 @@ class Shop:
             print('You can get your shopping list in current folder named \033[4;33;33m"factor.txt"\033[0;0m')
         return sell_product
 
-
-while True:
-    print('\033[1;31;43m---- The Menu ----\033[0;0m')
-    print('')
-    the_obj = Shop()
-    # Inventory Part
-    inventory_obj = the_obj.inventory()
-    list_id = inventory_obj[0]
-    list_name = inventory_obj[1]
-    list_count = inventory_obj[2]
-    list_price = inventory_obj[3]
-    print('\033[3;30;44m---- INVENTORIES ----\033[0;0m')
-    for i in range(len(list_id)):
-        print('Name: ' + list_name[i])
-        print('Price: ' + list_price[i] + ' $')
-        message = ''
-        if list_count[i] == '0':
-            message = '\033[3;31;31m All Sold...\033[0;0m'
-        print('Count: ' + list_count[i] + message)
-        print()
-
-    # Sell Part
-    print('\033[3;30;42m---- SELLING ----\033[0;0m')
-    id_sell_input = str(input("Enter the \033[1;36;36mid\033[0;0m of product you want to buy: "))
-    count_sell_input = str(input("Enter the \033[1;36;36mcount\033[0;0m of product you want to buy: "))
-    sell_obj = the_obj.sell(id_sell_input, count_sell_input)
-
-
-    quit_key = input('\033[3;30;45m Enter "q" to QUIT or leave blank to continue:\033[0;0m')
-    if quit_key == 'q':
-        break
-    else:
+    def buy_products(self):
         pass
 
+
+# while True:
+#     print('\033[1;31;43m---- The Menu ----\033[0;0m')
+#     print('')
+#     the_obj = Shop()
+#     # Inventory Part
+#     inventory_obj = the_obj.inventory()
+#     list_id = inventory_obj[0]
+#     list_name = inventory_obj[1]
+#     list_count = inventory_obj[2]
+#     list_price = inventory_obj[3]
+#     print('\033[3;30;44m---- INVENTORIES ----\033[0;0m')
+#     for i in range(len(list_id)):
+#         print('Name: ' + list_name[i])
+#         print('Price: ' + list_price[i] + ' $')
+#         message = ''
+#         if list_count[i] == '0':
+#             message = '\033[3;31;31m All Sold...\033[0;0m'
+#         print('Count: ' + list_count[i] + message)
+#         print()
+#
+#     # Sell Part
+#     print('\033[3;30;42m---- SELLING ----\033[0;0m')
+#     id_sell_input = str(input("Enter the \033[1;36;36mid\033[0;0m of product you want to buy: "))
+#     count_sell_input = str(input("Enter the \033[1;36;36mcount\033[0;0m of product you want to buy: "))
+#     sell_obj = the_obj.sell(id_sell_input, count_sell_input)
+#
+#     # Buy Products
+#
+#
+#
+#     quit_key = input('\033[3;30;45m Enter "q" to QUIT or leave blank to continue:\033[0;0m')
+#     if quit_key == 'q':
+#         break
+#     else:
+#         pass
