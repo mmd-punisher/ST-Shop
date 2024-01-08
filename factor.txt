@@ -1,10 +1,10 @@
 This is your shopping factor
 
-product id: 1
-product name: S21 FE
-product price: 250
+product id: 2
+product name: A54
+product price: 200
 product quantity: 1
-total price: 250
-customer name: mmd
-customer email: msdaf@fsdg
-customer address: gsgsdgdaddress
+total price: 200
+customer name: Mohammad
+customer email: email
+customer address: address
