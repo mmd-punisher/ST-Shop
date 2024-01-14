@@ -216,7 +216,7 @@ while True:
             print('1 - Full inventory\n2 - Buy products\n3 - Selling report ')
             admin_key = str(input('Enter the action number: '))
 
-            if admin_key == '1':  # OK: status -- Full inventory
+            if admin_key == '1':
                 inventory_obj = the_obj.inventory()
                 list_id = inventory_obj[0]
                 list_name = inventory_obj[1]
@@ -239,15 +239,14 @@ while True:
 
             elif admin_key == '3':
                 profit_obj = the_obj.profit_and_loss()
-                if profit_obj == 0:
+                if profit_obj == 'No content':
+                    print('\033[3;33;33mFile is Empty!\033[0;0m')
+                elif profit_obj == 0:
                     print(f'\033[3;33;33mYour profit is {str(profit_obj)} $\033[0;0m')
                 elif profit_obj > 0:
                     print(f'\033[2;32;32mYour profit is {str(profit_obj)} $\033[0;0m')
                 elif profit_obj < 0:
                     print(f'\033[2;31;31mYour profit is {str(profit_obj)} $\033[0;m')
-                else:
-                    print('\033[3;33;33mFile is Empty!\033[0;0m')
-
             else:
                 print('INVALID INPUT')
         else:
@@ -259,8 +258,7 @@ while True:
         print('1 - View store inventory \n2 - buying from shop')
         customer_key = str(input('Enter the action number: '))
 
-        if customer_key == '1':  # OK: status -- OK
-            # Inventory Part
+        if customer_key == '1':
             inventory_obj = the_obj.inventory()
             list_id = inventory_obj[0]
             list_name = inventory_obj[1]
@@ -277,7 +275,6 @@ while True:
                 print('Count: ' + list_count[i] + message + '\n')
 
         elif customer_key == '2':
-            # Sell Part
             print('\033[3;30;42m---- SELLING ----\033[0;0m')
             id_sell_input = str(input("Enter the \033[1;36;36mid\033[0;0m of product you want to buy: "))
             count_sell_input = str(input("Enter the \033[1;36;36mcount\033[0;0m of product you want to buy: "))
@@ -287,11 +284,10 @@ while True:
         else:
             print("INVALID INPUT")
             exit()
-    elif start_key.lower() == 'q':  # OK: status -- OK
+    elif start_key.lower() == 'q':
         exit()
     else:
         pass
-    # OK: status -- OK
     quit_key = input('\033[3;35;35m Enter "q" to QUIT or press "Enter" to continue:\033[0;0m')
     role_change = str(input('\033[1;36;36mFor change the role, type "role" or press "Enter" to continue: \033[0;0m'))
     if quit_key.lower() == 'q':
