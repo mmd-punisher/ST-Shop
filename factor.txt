@@ -1,10 +1,10 @@
 This is your shopping factor
 
-product id: 4
-product name: Lenovo IdeaPad 5
-product price: 590
-product quantity: 2
-total price: 1180
-customer name: myname
-customer email: sfaf
-customer address: eghd
+product id: 1
+product name: S21 FE
+product price: 250
+product quantity: 9
+total price: 2250
+customer name: Mohammad
+customer email: Email.com
+customer address: address street

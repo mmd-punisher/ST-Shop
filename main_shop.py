@@ -88,6 +88,11 @@ class Shop:
                         "Press \033[1;36;36mEnter \033[0;0mto continue shopping(type \033[1;31;31m'cancel'\033[0;0m to cancel your shopping): ")
                     if pass_key == "":
                         self.update_counts(product_list.index(product), count_input, opr='-')  # change quantity on file
+
+                        profit_file = open("profit.txt", "a")
+                        content = '+' + str(count_input) + '*' + str(prd_parts[4]) + '#'
+                        profit_file.write(content)
+
                         sell_product = {
                             'product id': prd_parts[0],
                             'product name': prd_parts[1],
@@ -98,15 +103,20 @@ class Shop:
                             'customer email': customer_email,
                             'customer address': customer_address
                         }
+
                         with open('factor.txt', 'w') as file:
                             file.write("This is your shopping factor\n\n")
                             for key, value in sell_product.items():
                                 file.write(f"{key}: {value}\n")
 
-                        print('\033[1;30;42mTnx for your shopping\033[0;0m')
                         print("You can find your shopping list in the 'factor.txt' file.")
-
-                        self.display_file('factor.txt')
+                        yes_no_fac = input("Want to see ur factor? (yes/no) ")
+                        if yes_no_fac.lower() == 'yes':
+                            self.display_file('factor.txt')
+                            print('\033[1;30;42mTnx for your shopping\033[0;0m')
+                        else:
+                            print('\033[1;30;42mTnx for your shopping\033[0;0m')
+                            exit()
 
                     elif pass_key.lower() == "cancel":
                         return
@@ -140,6 +150,12 @@ class Shop:
             new_index = index_prd_name
             self.update_counts(new_index, new_count, opr='+')
             print('\033[1;30;42mProduct updated successfully!\033[0;0m')
+            new_purchase = list_purchase_priceb[new_index]
+
+            profit_file = open("profit.txt", "a")
+            content = '-' + str(new_count) + '*' + str(new_purchase) + '#'
+            profit_file.write(content)
+
         else:
             new_purchase = int(input('Purchase price: '))
             new_price = int(input('Sales price: '))
@@ -160,6 +176,26 @@ class Shop:
                 str_2_write = str_2_write.rstrip('*')
                 file.write(str_2_write)
             print('\033[1;30;42mProduct added successfully!\033[0;0m')
+
+            profit_file = open("profit.txt", "a")
+            content = '-' + str(new_count) + '*' + str(new_purchase) + '#'
+            profit_file.write(content)
+
+    def profit_and_loss(self):
+        try:
+            with open("profit.txt", 'r') as file:
+                profit_info = str(file.readline())
+                profit_info = profit_info.rstrip('#')  # delete the last sharp
+                profit_list = profit_info.split('#')
+                profit_result = 0
+                for p in range(len(profit_list)):
+                    profit_items = profit_list[p].split('*')
+                    count_p = int(profit_items[0])
+                    price_p = int(profit_items[1])
+                    profit_result += count_p * price_p
+        except:
+            profit_result = 'No content'
+        return profit_result
 
 
 start_key = str(
@@ -202,7 +238,15 @@ while True:
                 the_obj.buy_products()
 
             elif admin_key == '3':
-                pass
+                profit_obj = the_obj.profit_and_loss()
+                if profit_obj == 0:
+                    print(f'\033[3;33;33mYour profit is {str(profit_obj)} $\033[0;0m')
+                elif profit_obj > 0:
+                    print(f'\033[2;32;32mYour profit is {str(profit_obj)} $\033[0;0m')
+                elif profit_obj < 0:
+                    print(f'\033[2;31;31mYour profit is {str(profit_obj)} $\033[0;m')
+                else:
+                    print('\033[3;33;33mFile is Empty!\033[0;0m')
 
             else:
                 print('INVALID INPUT')
@@ -210,12 +254,12 @@ while True:
             print('\033[1;30;41mWrong username or password\033[0;0m')
             exit()
 
-    elif start_key == '2':  # OK: status -- OK
+    elif start_key == '2':
         print('\033[1;31;43m---- The Menu ----\033[0;0m\n')
         print('1 - View store inventory \n2 - buying from shop')
         customer_key = str(input('Enter the action number: '))
 
-        if customer_key == '1':
+        if customer_key == '1':  # OK: status -- OK
             # Inventory Part
             inventory_obj = the_obj.inventory()
             list_id = inventory_obj[0]
