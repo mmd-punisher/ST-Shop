@@ -132,7 +132,7 @@ class Shop:
             list_name_lower[nm] = list_nameb[nm].replace(" ", "").lower()
         flag_f = False
         for m in range(len(list_name_lower)):
-            if list_name_lower[m] == name_buy_lower:
+            if name_buy_lower == list_name_lower[m]:
                 index_prd_name = m
                 flag_f = True
                 break
@@ -198,9 +198,6 @@ while True:
                     print('Count: ' + list_count[i] + message + '\n')
 
             elif admin_key == '2':
-                inventory_obj = the_obj.inventory()
-                list_id = inventory_obj[0]
-                list_name = inventory_obj[1]
                 print('\033[3;30;44m---- BUY PRODUCTS ----\033[0;0m')
                 the_obj.buy_products()
 
