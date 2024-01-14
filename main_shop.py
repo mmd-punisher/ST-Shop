@@ -235,7 +235,7 @@ while True:
                     message = '\033[3;31;31m All Sold...\033[0;0m'
                 print('Count: ' + list_count[i] + message + '\n')
 
-        elif customer_key == '2':  # NEEDTO: Show file with os
+        elif customer_key == '2':
             # Sell Part
             print('\033[3;30;42m---- SELLING ----\033[0;0m')
             id_sell_input = str(input("Enter the \033[1;36;36mid\033[0;0m of product you want to buy: "))
@@ -265,6 +265,3 @@ while True:
         exit()
     else:
         pass
-
-# Buy Products
-# print(the_obj.buy_products())
