@@ -5,21 +5,30 @@ class Shop:
     def __init__(self, product_file='products.txt'):
         self.product_file = product_file
 
-    def update_counts(self, prd_index, new_count):  # nothing to return
+    def update_counts(self, prd_index, new_count, opr):  # nothing to return
         with open(self.product_file, 'r') as file:
             product_info = file.readlines()[0]
         product_list = product_info.split('*')
         for item in range(len(product_list)):
             product = product_list[item].split('-')
             if item == prd_index:
-                product[2] = str(new_count)
+                if opr == '-':
+                    prd_c = int(product[2])
+                    prd_c = prd_c - int(new_count)
+                    product[2] = str(prd_c)
+                else:
+                    prd_c = int(product[2])
+                    prd_c = prd_c + int(new_count)
+                    product[2] = str(prd_c)
+
             product_list[item] = '-'.join(product)
 
         updated_info = '*'.join(product_list)
         with open(self.product_file, 'w') as file:
             file.write(updated_info)
 
-    def display_file(self, file_path):
+    @staticmethod
+    def display_file(file_path):
         root = tk.Tk()
         with open(file_path, 'r') as file:
             content = file.read()
@@ -78,8 +87,7 @@ class Shop:
                     pass_key = input(
                         "Press \033[1;36;36mEnter \033[0;0mto continue shopping(type \033[1;31;31m'cancel'\033[0;0m to cancel your shopping): ")
                     if pass_key == "":
-                        update_count = int(prd_parts[2]) - int(count_input)
-                        self.update_counts(product_list.index(product), update_count)  # change quantity on file
+                        self.update_counts(product_list.index(product), count_input, opr='-')  # change quantity on file
                         sell_product = {
                             'product id': prd_parts[0],
                             'product name': prd_parts[1],
@@ -107,9 +115,51 @@ class Shop:
                         return
         return sell_product
 
-    def buy_products(self):  # TODO: complete this
-        inventory_id_list, inventory_prd_list, inventory_count_list, inventory_price_list, inventory_purchase_price_list = self.inventory()
-        return inventory_id_list, inventory_prd_list
+    def buy_products(self):
+
+        inventory_objj = self.inventory()
+        list_idb = inventory_objj[0]
+        list_nameb = inventory_objj[1]
+        list_countb = inventory_objj[2]
+        list_purchase_priceb = inventory_objj[4]
+        list_priceb = inventory_objj[3]
+
+        new_name = input('Product name: ')
+        new_count = int(input('Quantity: '))
+        name_buy_lower = new_name.replace(" ", "").lower()
+        list_name_lower = [''] * len(list_idb)
+        for nm in range(len(list_nameb)):
+            list_name_lower[nm] = list_nameb[nm].replace(" ", "").lower()
+        flag_f = False
+        for m in range(len(list_name_lower)):
+            if list_name_lower[m] == name_buy_lower:
+                index_prd_name = m
+                flag_f = True
+                break
+        if flag_f:
+            new_index = index_prd_name
+            self.update_counts(new_index, new_count, opr='+')
+            print('\033[1;30;42mProduct updated successfully!\033[0;0m')
+        else:
+            new_purchase = int(input('Purchase price: '))
+            new_price = int(input('Sales price: '))
+            id_buy = int(list_idb[-1]) + 1
+            list_idb.append(id_buy)
+            list_nameb.append(new_name)
+            list_countb.append(new_count)
+            list_purchase_priceb.append(new_purchase)
+            list_priceb.append(new_price)
+            str_2_write = ''
+            with open(self.product_file, 'w') as file:
+                for item in range(len(list_idb)):
+                    str_2_write += (str(list_idb[item]) + '-' +
+                                    str(list_nameb[item]) + '-' +
+                                    str(list_countb[item]) + '-' +
+                                    str(list_purchase_priceb[item]) + '-' +
+                                    str(list_priceb[item]) + '*')
+                str_2_write = str_2_write.rstrip('*')
+                file.write(str_2_write)
+            print('\033[1;30;42mProduct added successfully!\033[0;0m')
 
 
 start_key = str(
@@ -148,7 +198,11 @@ while True:
                     print('Count: ' + list_count[i] + message + '\n')
 
             elif admin_key == '2':
-                pass
+                inventory_obj = the_obj.inventory()
+                list_id = inventory_obj[0]
+                list_name = inventory_obj[1]
+                print('\033[3;30;44m---- BUY PRODUCTS ----\033[0;0m')
+                the_obj.buy_products()
 
             elif admin_key == '3':
                 pass
@@ -214,13 +268,3 @@ while True:
 
 # Buy Products
 # print(the_obj.buy_products())
-
-
-# root = tk.Tk()
-# with open('factor.txt', 'r') as file:
-#     content = file.read()
-# text_box = tk.Text(root)
-# root.title('Factor')
-# text_box.insert(tk.END, content)
-# text_box.pack()
-# root.mainloop()
