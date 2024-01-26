@@ -1,10 +1,11 @@
 This is your shopping factor
 
-product id: 1
-product name: S21 FE
-product price: 250
-product quantity: 9
-total price: 2250
-customer name: Mohammad
-customer email: Email.com
-customer address: address street
+Product id: 1
+Product name: S21 FE
+Product price: 250
+Product quantity: 1
+Total price: 250
+Customer name: Mohammad Mousapour
+Customer email: email@email.com
+Customer address: North Khorasan
+Purchase date: 01/26/2024, 18:10

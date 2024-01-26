@@ -1,4 +1,5 @@
 import tkinter as tk
+from datetime import datetime
 
 
 class Shop:
@@ -94,14 +95,15 @@ class Shop:
                         profit_file.write(content)
 
                         sell_product = {
-                            'product id': prd_parts[0],
-                            'product name': prd_parts[1],
-                            'product price': prd_parts[4],
-                            'product quantity': count_input,
-                            'total price': total_price,
-                            'customer name': customer_name,
-                            'customer email': customer_email,
-                            'customer address': customer_address
+                            'Product id': prd_parts[0],
+                            'Product name': prd_parts[1],
+                            'Product price': prd_parts[4],
+                            'Product quantity': count_input,
+                            'Total price': total_price,
+                            'Customer name': customer_name,
+                            'Customer email': customer_email,
+                            'Customer address': customer_address,
+                            'Purchase date': datetime.now().strftime("%m/%d/%Y, %H:%M")
                         }
 
                         with open('factor.txt', 'w') as file:
