@@ -208,6 +208,7 @@ username = ''
 password = ''
 while True:
     the_obj = Shop()
+    f_not_invalid = True
     if start_key == '1':
         if username != 'admin' and password != '1234':
             username = str(input('Enter your username: '))
@@ -289,9 +290,18 @@ while True:
     elif start_key.lower() == 'q':
         exit()
     else:
-        pass
+        print('INVALID INPUT')
+        start_key = str(input('\nChose one\n"c" to continue\n"q" to exit\n: '))
+        role_change = 'role'
+        f_not_invalid = False
+        if start_key.lower() == 'q':
+            exit()
+        else:
+            pass
     quit_key = input('\033[3;35;35m Enter "q" to QUIT or press "Enter" to continue:\033[0;0m')
-    role_change = str(input('\033[1;36;36mFor change the role, type "role" or press "Enter" to continue: \033[0;0m'))
+    if f_not_invalid:
+        role_change = str(
+            input('\033[1;36;36mFor change the role, type "role" or press "Enter" to continue: \033[0;0m'))
     if quit_key.lower() == 'q':
         exit()
     else:
